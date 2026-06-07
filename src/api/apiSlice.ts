@@ -12,7 +12,9 @@ import type {
   User,
 } from '../types';
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
+// A REST API teljes alapcíme (a /api/v1 résszel együtt) – globálisan a .env-ből.
+// Lokálisan: http://localhost:3000/api/v1 ; éles (Vercel): https://roomlie-api.gkrisz.space/api/v1
+const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000/api/v1';
 const NEPTUN_CODE = import.meta.env.VITE_NEPTUN_CODE ?? '';
 
 // Fejlesztés alatt (localhost) NEM küldjük az X-Neptun-Code fejlécet (a szerver
@@ -20,7 +22,7 @@ const NEPTUN_CODE = import.meta.env.VITE_NEPTUN_CODE ?? '';
 const IS_PRODUCTION_API = !/localhost|127\.0\.0\.1/.test(API_URL);
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: `${API_URL}/api/v1`,
+  baseUrl: API_URL,
   // A HttpOnly süti alapú hitelesítéshez is jó, de elsődlegesen Bearer tokent használunk.
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
